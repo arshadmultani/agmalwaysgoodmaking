@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\PortfolioItem;
 use App\Services\ImageService;
 use Illuminate\Contracts\View\View;
@@ -25,15 +26,16 @@ class PortfolioController extends Controller
         }
 
         $items = $query->orderBy('sort_order')->latest()->paginate(24);
+        $categories = Category::orderBy('sort_order')->get();
 
-        return view('admin.portfolio.index', compact('items'));
+        return view('admin.portfolio.index', compact('items', 'categories'));
     }
 
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'category' => ['required', 'string', 'in:kitchen,wardrobe,glazing,ceiling,interior,commercial'],
+            'category' => ['required', 'string', 'exists:categories,slug'],
             'photo' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:15360'], // up to 15MB
             'caption' => ['nullable', 'string', 'max:500'],
             'is_featured' => ['nullable', 'boolean'],

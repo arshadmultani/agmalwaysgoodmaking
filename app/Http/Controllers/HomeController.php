@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\PortfolioItem;
 use App\Models\Service;
 use App\Models\SiteSetting;
@@ -13,6 +14,7 @@ class HomeController extends Controller
     {
         $services = Service::orderBy('sort_order')->get();
         $portfolio = PortfolioItem::orderBy('sort_order')->get();
+        $categories = Category::orderBy('sort_order')->get();
 
         $settings = [
             'company_name' => SiteSetting::get('company_name', 'AGM Always Good Making'),
@@ -29,7 +31,7 @@ class HomeController extends Controller
             'years_experience' => SiteSetting::get('years_experience', '12+'),
         ];
 
-        return view('pages.home', compact('services', 'portfolio', 'settings'));
+        return view('pages.home', compact('services', 'portfolio', 'settings', 'categories'));
     }
 
     public function service(string $slug): View
@@ -37,7 +39,6 @@ class HomeController extends Controller
         $service = Service::where('slug', $slug)->firstOrFail();
         $otherServices = Service::where('id', '!=', $service->id)->take(4)->get();
         $relatedPortfolio = PortfolioItem::where('category', $service->category)
-            ->orWhere('category', 'kitchen')
             ->take(6)
             ->get();
 

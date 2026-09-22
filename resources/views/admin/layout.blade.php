@@ -37,6 +37,10 @@
                    class="px-3 py-1.5 rounded-lg {{ request()->routeIs('admin.services.*') ? 'bg-slate-800 text-amber-400' : 'text-slate-300 hover:text-white hover:bg-slate-800/60' }} transition-colors">
                     Services
                 </a>
+                <a href="{{ route('admin.categories.index') }}" 
+                   class="px-3 py-1.5 rounded-lg {{ request()->routeIs('admin.categories.*') ? 'bg-slate-800 text-amber-400' : 'text-slate-300 hover:text-white hover:bg-slate-800/60' }} transition-colors">
+                    Categories
+                </a>
                 <a href="{{ route('admin.leads.index') }}" 
                    class="px-3 py-1.5 rounded-lg {{ request()->routeIs('admin.leads.*') ? 'bg-slate-800 text-amber-400' : 'text-slate-300 hover:text-white hover:bg-slate-800/60' }} transition-colors flex items-center gap-1.5">
                     Inquiries
@@ -100,6 +104,11 @@
                @click="mobileNav = false"
                class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold {{ request()->routeIs('admin.services.*') ? 'bg-amber-500/10 text-amber-400 font-bold' : 'text-slate-300 hover:bg-slate-800' }}">
                 <span>🛠️</span> Services & Catalog
+            </a>
+            <a href="{{ route('admin.categories.index') }}" 
+               @click="mobileNav = false"
+               class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold {{ request()->routeIs('admin.categories.*') ? 'bg-amber-500/10 text-amber-400 font-bold' : 'text-slate-300 hover:bg-slate-800' }}">
+                <span>🏷️</span> Categories
             </a>
             <a href="{{ route('admin.leads.index') }}" 
                @click="mobileNav = false"

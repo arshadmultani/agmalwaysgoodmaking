@@ -29,11 +29,11 @@
             <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">Category *</label>
                 <select name="category" required class="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-xs sm:text-sm focus:border-amber-500 outline-none bg-white">
-                    <option value="modular_kitchen" {{ $service->category === 'modular_kitchen' ? 'selected' : '' }}>Modular Kitchen</option>
-                    <option value="wardrobe" {{ $service->category === 'wardrobe' ? 'selected' : '' }}>Wardrobe</option>
-                    <option value="glazing" {{ $service->category === 'glazing' ? 'selected' : '' }}>Aluminium Glazing</option>
-                    <option value="ceiling" {{ $service->category === 'ceiling' ? 'selected' : '' }}>False Ceiling</option>
-                    <option value="interior" {{ $service->category === 'interior' ? 'selected' : '' }}>Turnkey Interior</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->slug }}" {{ old('category', $service->category) === $category->slug ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
             <div>

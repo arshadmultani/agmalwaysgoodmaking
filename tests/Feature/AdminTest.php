@@ -53,7 +53,7 @@ test('admin can upload a work photo to portfolio', function () {
 
     $response = $this->actingAs($user)->post('/admin/portfolio', [
         'title' => 'Test Kitchen Work',
-        'category' => 'kitchen',
+        'category' => 'modular_kitchen',
         'photo' => $file,
         'caption' => 'Installed at Saket Indore',
     ]);
@@ -61,7 +61,7 @@ test('admin can upload a work photo to portfolio', function () {
     $response->assertRedirect();
     $this->assertDatabaseHas('portfolio_items', [
         'title' => 'Test Kitchen Work',
-        'category' => 'kitchen',
+        'category' => 'modular_kitchen',
     ]);
 });
 

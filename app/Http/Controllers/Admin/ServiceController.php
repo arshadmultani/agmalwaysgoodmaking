@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Service;
 use App\Services\ImageService;
 use Illuminate\Contracts\View\View;
@@ -19,15 +20,16 @@ class ServiceController extends Controller
     public function index(): View
     {
         $services = Service::orderBy('sort_order')->get();
+        $categories = Category::orderBy('sort_order')->get();
 
-        return view('admin.services.index', compact('services'));
+        return view('admin.services.index', compact('services', 'categories'));
     }
 
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'category' => ['required', 'string', 'in:modular_kitchen,wardrobe,glazing,ceiling,interior'],
+            'category' => ['required', 'string', 'exists:categories,slug'],
             'starting_price' => ['nullable', 'string', 'max:50'],
             'price_unit' => ['nullable', 'string', 'max:20'],
             'description' => ['nullable', 'string'],
@@ -66,14 +68,16 @@ class ServiceController extends Controller
 
     public function edit(Service $service): View
     {
-        return view('admin.services.edit', compact('service'));
+        $categories = Category::orderBy('sort_order')->get();
+
+        return view('admin.services.edit', compact('service', 'categories'));
     }
 
     public function update(Request $request, Service $service): RedirectResponse
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'category' => ['required', 'string', 'in:modular_kitchen,wardrobe,glazing,ceiling,interior'],
+            'category' => ['required', 'string', 'exists:categories,slug'],
             'starting_price' => ['nullable', 'string', 'max:50'],
             'price_unit' => ['nullable', 'string', 'max:20'],
             'description' => ['nullable', 'string'],

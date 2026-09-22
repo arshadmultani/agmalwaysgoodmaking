@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Lead;
 use App\Models\PortfolioItem;
 use App\Models\Service;
@@ -17,11 +18,13 @@ class DashboardController extends Controller
             'new_leads' => Lead::where('status', 'new')->count(),
             'total_portfolio' => PortfolioItem::count(),
             'total_services' => Service::count(),
+            'total_categories' => Category::count(),
         ];
 
         $recentLeads = Lead::latest()->take(6)->get();
         $recentPortfolio = PortfolioItem::latest()->take(6)->get();
+        $categories = Category::orderBy('sort_order')->get();
 
-        return view('admin.dashboard', compact('stats', 'recentLeads', 'recentPortfolio'));
+        return view('admin.dashboard', compact('stats', 'recentLeads', 'recentPortfolio', 'categories'));
     }
 }

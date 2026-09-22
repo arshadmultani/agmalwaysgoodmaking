@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LeadController as AdminLeadController;
 use App\Http\Controllers\Admin\PortfolioController;
@@ -32,6 +33,9 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
     // Services
     Route::resource('services', ServiceController::class)->except(['show']);
+
+    // Categories
+    Route::resource('categories', CategoryController::class)->except(['show', 'create', 'edit']);
 
     // Leads / Inquiries
     Route::get('/leads', [AdminLeadController::class, 'index'])->name('leads.index');

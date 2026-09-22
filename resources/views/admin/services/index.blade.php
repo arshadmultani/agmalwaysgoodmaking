@@ -11,9 +11,14 @@
             <h1 class="text-xl font-extrabold text-slate-900">Services & Pricing Catalog</h1>
             <p class="text-xs text-slate-500 mt-0.5">Manage service offerings, specifications, and starting rates displayed on the website.</p>
         </div>
-        <button @click="addServiceModal = true" class="w-full sm:w-auto px-5 py-3 sm:py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all shadow-xs cursor-pointer text-center active:scale-98">
-            + Add New Service
-        </button>
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+            <a href="{{ route('admin.categories.index') }}" class="px-4 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs transition-all text-center">
+                🏷️ Manage Categories
+            </a>
+            <button @click="addServiceModal = true" class="w-full sm:w-auto px-5 py-3 sm:py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all shadow-xs cursor-pointer text-center active:scale-98">
+                + Add New Service
+            </button>
+        </div>
     </div>
 
     <!-- Mobile View: Service Cards (Visible on screens < 768px) -->
@@ -139,11 +144,9 @@
                         <div>
                             <label class="block text-xs font-bold text-slate-700 mb-1">Category *</label>
                             <select name="category" required class="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-xs sm:text-sm focus:border-amber-500 outline-none bg-white">
-                                <option value="modular_kitchen">Modular Kitchen</option>
-                                <option value="wardrobe">Wardrobe</option>
-                                <option value="glazing">Aluminium Glazing</option>
-                                <option value="ceiling">False Ceiling</option>
-                                <option value="interior">Turnkey Interior</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->slug }}">{{ $category->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div>
